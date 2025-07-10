@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    environment:
+      - WATCHPACK_POLLING=true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front-end:/app
+      - /app/node_modules
+    command: sh -c "npm run ${NPM_COMMAND:-dev}"
+
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./back-end:/app
+      - /app/node_modules
+    command: npm run dev
