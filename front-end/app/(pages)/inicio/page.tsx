@@ -1,15 +1,15 @@
-"use client"
+"use client";
 import {
-  BarChart,
   Bar,
+  BarChart,
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-  PieChart,
-  Pie,
-  Cell,
 } from "recharts";
 
 const leadData = [
@@ -37,7 +37,6 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 export default function DashboardPage() {
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-8">
-      
       {/* Cards principais */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div className="bg-white shadow rounded-lg p-6">
@@ -79,7 +78,10 @@ export default function DashboardPage() {
                 label
               >
                 {leadData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
                 ))}
               </Pie>
               <Tooltip />
@@ -94,7 +96,10 @@ export default function DashboardPage() {
             Tarefas Concluídas x Pendentes
           </h3>
           <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={taskData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <BarChart
+              data={taskData}
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+            >
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
@@ -107,7 +112,9 @@ export default function DashboardPage() {
 
       {/* Agenda da semana */}
       <div className="bg-white shadow rounded-lg p-6">
-        <h3 className="text-xl font-semibold mb-4 text-gray-700">Agendamentos da Semana</h3>
+        <h3 className="text-xl font-semibold mb-4 text-gray-700">
+          Agendamentos da Semana
+        </h3>
         <table className="w-full table-auto border-collapse">
           <thead>
             <tr className="bg-gray-100">

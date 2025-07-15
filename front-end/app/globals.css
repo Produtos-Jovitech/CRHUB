@@ -120,3 +120,24 @@
     @apply bg-background text-foreground;
   }
 }
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: none; /* Oculta a scrollbar */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+/* Para garantir que funcione em todos */
+.scroll-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+}

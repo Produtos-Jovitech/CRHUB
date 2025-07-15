@@ -1,11 +1,11 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import logoSrc from "@/public/image/logoMenu.png";
 import { Menu } from "lucide-react";
-import { FC } from "react";
 import Image from "next/image";
-import logoSrc from "@/public/image/logoMenu.png"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { FC } from "react";
 
 interface SidebarProps {
   open: boolean;
@@ -16,9 +16,7 @@ const Sidebar: FC<SidebarProps> = ({ open, onClose }) => {
   const pathname = usePathname();
 
   const isActive = (href: string) =>
-    pathname === href
-      ? "bg-white/20 font-semibold"
-      : "hover:bg-white/10";
+    pathname === href ? "bg-white/20 font-semibold" : "hover:bg-white/10";
 
   return (
     <>
@@ -32,7 +30,7 @@ const Sidebar: FC<SidebarProps> = ({ open, onClose }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-[#10a3d7] text-white transition-transform duration-300 z-50 ${
+        className={`fixed top-0 left-0 h-full w-64 bg-[#00264d] text-white transition-transform duration-300 z-50 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -64,8 +62,8 @@ const Sidebar: FC<SidebarProps> = ({ open, onClose }) => {
           {/* Prioridade: Dashboard e Kanban */}
           <div className="space-y-1">
             <Link
-              href="/home"
-              className={`block py-2 px-3 rounded ${isActive("/home")}`}
+              href="/inicio"
+              className={`block py-2 px-3 rounded ${isActive("/inicio")}`}
             >
               Dashboard
             </Link>
@@ -73,11 +71,11 @@ const Sidebar: FC<SidebarProps> = ({ open, onClose }) => {
               href="/kanban"
               className={`block py-2 px-3 rounded ${isActive("/kanban")}`}
             >
-              Kanban
+              Funis ( Kanbans)
             </Link>
           </div>
 
-         <div>
+          <div>
             <h3 className="text-xs uppercase font-semibold text-white/70 mb-2 px-3">
               Leads
             </h3>
@@ -126,13 +124,15 @@ const Sidebar: FC<SidebarProps> = ({ open, onClose }) => {
             </Link>
             <Link
               href="/appointments/new"
-              className={`block py-2 px-3 rounded ${isActive("/appointments/new")}`}
+              className={`block py-2 px-3 rounded ${isActive(
+                "/appointments/new"
+              )}`}
             >
               Novo Agendamento
             </Link>
           </div>
 
-           <div>
+          <div>
             <h3 className="text-xs uppercase font-semibold text-white/70 mb-2 px-3">
               Metas
             </h3>
