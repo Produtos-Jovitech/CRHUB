@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "@/contexts/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-   title: 'CRHUB',
-  description: 'CRM App',
+  title: "CRHUB",
+  description: "CRM App",
 };
 
 export default function RootLayout({
@@ -30,6 +29,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-
-

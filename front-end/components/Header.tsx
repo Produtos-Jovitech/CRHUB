@@ -43,6 +43,8 @@ const Header: FC<HeaderProps> = ({
     email: "joao.silva@email.com",
     avatarUrl:
       "https://ui-avatars.com/api/?name=Joao+Silva&background=0D8ABC&color=fff",
+    nameEmpresa: "Jovitech Sistemas",
+    filialEmpresa: "Empresa 1 Jaraguá",
   };
 
   return (
@@ -75,14 +77,14 @@ const Header: FC<HeaderProps> = ({
 
       <nav className="hidden md:flex items-center gap-4 mr-1">
         <Link
-          href="/settings"
+          href="/configuracoes"
           aria-label="Configurações"
           className="p-2 rounded-md hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50"
         >
           <Settings size={22} className="text-white" />
         </Link>
         <Link
-          href="/profile"
+          href="/perfil"
           aria-label="Perfil"
           className="p-2 rounded-md hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50"
         >
@@ -156,16 +158,22 @@ const Header: FC<HeaderProps> = ({
             </Avatar>
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuContent align="end" className="w-60">
           {user && (
-            <div className="space-y-1 ml-1.5 mt-2">
-              <p className="text-sm font-semibold text-foreground">
-                {user.name}
-              </p>
-              <p className="text-xs text-muted-foreground truncate">
-                {user.email}
-              </p>
-            </div>
+            <>
+              <div className="space-y-1 ml-1.5 mt-2">
+                <p className="text-sm font-semibold text-foreground">
+                  {user.name}
+                </p>
+
+                <p className="text-xs text-muted-foreground truncate">
+                  Empresa: {user.nameEmpresa}
+                </p>
+                <p className="text-xs text-muted-foreground truncate">
+                  Filial: {user.filialEmpresa}
+                </p>
+              </div>
+            </>
           )}
 
           <DropdownMenuSeparator />

@@ -95,6 +95,7 @@ export default function KanbanPage() {
   );
   const [etapas, setEtapas] = useState<Etapa[]>([]);
   const [modalAberto, setModalAberto] = useState(false);
+  const [modalConfiguracaoEtapa, setModalConfiguracaoEtapa] = useState(false);
   const [novoNomeFunil, setNovoNomeFunil] = useState("");
   const [novaCorFunil, setNovaCorFunil] = useState<Cor>("blue");
 
@@ -200,10 +201,40 @@ export default function KanbanPage() {
         ))}
 
         {/* Botão para abrir modal */}
-        <Button variant="outline" onClick={() => setModalAberto(true)}>
+        <Button
+          className="cursor-pointer"
+          variant="outline"
+          onClick={() => setModalAberto(true)}
+        >
           + Novo Funil
         </Button>
       </div>
+
+      <Dialog
+        open={modalConfiguracaoEtapa}
+        onOpenChange={setModalConfiguracaoEtapa}
+      >
+        <DialogContent className="sm:max-w-[425px] sm:max-h[500px]">
+          <DialogHeader>
+            <DialogTitle>Configurações da Etapa</DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            <div className="flex justify-end gap-2 cursor-pointer">
+              <Button
+                variant="outline"
+                className="cursor-pointer"
+                onClick={() => setModalConfiguracaoEtapa(false)}
+              >
+                Cancelar
+              </Button>
+              <Button className="cursor-pointer" onClick={adicionarFunil}>
+                Adicionar
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Modal para criar novo funil */}
       <Dialog open={modalAberto} onOpenChange={setModalAberto}>
@@ -247,10 +278,16 @@ export default function KanbanPage() {
             </div>
 
             <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setModalAberto(false)}>
+              <Button
+                variant="outline"
+                className="cursor-pointer"
+                onClick={() => setModalAberto(false)}
+              >
                 Cancelar
               </Button>
-              <Button onClick={adicionarFunil}>Adicionar</Button>
+              <Button className="cursor-pointer" onClick={adicionarFunil}>
+                Adicionar
+              </Button>
             </div>
           </div>
         </DialogContent>
@@ -279,8 +316,9 @@ export default function KanbanPage() {
                     onChange={(novoNome) => renomearEtapa(index, novoNome)}
                   />
                   <button
-                    onClick={() => alert(`Configurar etapa: ${etapa.name}`)}
-                    className="hover:text-gray-200 p-1 rounded"
+                    // onClick={() => alert(`Configurar etapa: ${etapa.name}`)}
+                    className="hover:text-gray-200 p-1 rounded cursor-pointer"
+                    onClick={() => setModalConfiguracaoEtapa(true)}
                   >
                     <Settings size={20} />
                   </button>
@@ -303,7 +341,7 @@ export default function KanbanPage() {
             onClick={() =>
               setEtapas((prev) => [...prev, { name: "Nova Etapa", cards: [] }])
             }
-            className="flex items-center justify-center bg-blue-100 hover:bg-blue-200 text-blue-600 font-semibold rounded-lg p-4 min-h-[120px] shadow shrink-0"
+            className="flex items-center  cursor-pointer justify-center bg-blue-100 hover:bg-blue-200 text-blue-600 font-semibold rounded-lg p-4 min-h-[120px] shadow shrink-0"
             style={{
               width: `calc((100vw - 10px - 48px) / 4)`,
             }}
