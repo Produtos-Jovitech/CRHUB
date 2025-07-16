@@ -1,11 +1,11 @@
 "use client";
 
 import logoSrc from "@/public/image/logoMenu.png";
-import { Menu } from "lucide-react";
+import { ChevronDown, ChevronUp, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FC } from "react";
+import { FC, useState } from "react";
 
 interface SidebarProps {
   open: boolean;
@@ -14,6 +14,12 @@ interface SidebarProps {
 
 const Sidebar: FC<SidebarProps> = ({ open, onClose }) => {
   const pathname = usePathname();
+
+  const [cadastroOpen, setCadastroOpen] = useState(false);
+  const [importacoesOpen, setImportacoesOpen] = useState(false);
+  const [tarefasOpen, setTarefasOpen] = useState(false);
+  const [agendamentoOpen, setAgendamentoOpen] = useState(false);
+  const [conexoesOpen, setConexoesOpen] = useState(false);
 
   const isActive = (href: string) =>
     pathname === href ? "bg-white/20 font-semibold" : "hover:bg-white/10";
@@ -59,7 +65,7 @@ const Sidebar: FC<SidebarProps> = ({ open, onClose }) => {
 
         {/* Navegação */}
         <nav className="p-4 space-y-6">
-          {/* Prioridade: Dashboard e Kanban */}
+          {/* Dashboard e Kanban */}
           <div className="space-y-1">
             <Link
               href="/inicio"
@@ -71,90 +77,154 @@ const Sidebar: FC<SidebarProps> = ({ open, onClose }) => {
               href="/kanban"
               className={`block py-2 px-3 rounded ${isActive("/kanban")}`}
             >
-              Funis ( Kanbans)
+              Funis (Kanbans)
             </Link>
           </div>
 
+          {/* Cadastro/Consulta */}
           <div>
-            <h3 className="text-xs uppercase font-semibold text-white/70 mb-2 px-3">
-              Leads
-            </h3>
-            <Link
-              href="/tasks"
-              className={`block py-2 px-3 rounded ${isActive("/tasks")}`}
+            <button
+              onClick={() => setCadastroOpen(!cadastroOpen)}
+              className="w-full flex justify-between items-center text-left py-2 px-3 rounded hover:bg-white/10"
             >
-              Importação de Leads
-            </Link>
-            <Link
-              href="/tasks/new"
-              className={`block py-2 px-3 rounded ${isActive("/tasks/new")}`}
-            >
-              Visualizar Leads
-            </Link>
-          </div>
-          {/* Tarefas */}
-          <div>
-            <h3 className="text-xs uppercase font-semibold text-white/70 mb-2 px-3">
-              Tarefas
-            </h3>
-            <Link
-              href="/tasks"
-              className={`block py-2 px-3 rounded ${isActive("/tasks")}`}
-            >
-              Visualizar Tarefas
-            </Link>
-            <Link
-              href="/tasks/new"
-              className={`block py-2 px-3 rounded ${isActive("/tasks/new")}`}
-            >
-              Nova Tarefa
-            </Link>
-          </div>
-
-          {/* Agendamentos */}
-          <div>
-            <h3 className="text-xs uppercase font-semibold text-white/70 mb-2 px-3">
-              Agendamentos
-            </h3>
-            <Link
-              href="/appointments"
-              className={`block py-2 px-3 rounded ${isActive("/appointments")}`}
-            >
-              Agendamentos
-            </Link>
-            <Link
-              href="/appointments/new"
-              className={`block py-2 px-3 rounded ${isActive(
-                "/appointments/new"
-              )}`}
-            >
-              Novo Agendamento
-            </Link>
+              <span className="text-xs uppercase font-semibold text-white/70">
+                Cadastros gerais
+              </span>
+              {cadastroOpen ? (
+                <ChevronUp size={16} />
+              ) : (
+                <ChevronDown size={16} />
+              )}
+            </button>
+            {cadastroOpen && (
+              <div className="mt-1 space-y-1 pl-4">
+                <Link
+                  href="/importacaoLeads"
+                  className={`block py-2 px-3 rounded ${isActive(
+                    "/importacaoLeads"
+                  )}`}
+                >
+                  Cadastro de Clientes
+                </Link>
+                <Link
+                  href="/tasks/new"
+                  className={`block py-2 px-3 rounded ${isActive(
+                    "/tasks/new"
+                  )}`}
+                >
+                  Consultar Clientes
+                </Link>
+              </div>
+            )}
           </div>
 
+          {/* Importações */}
           <div>
-            <h3 className="text-xs uppercase font-semibold text-white/70 mb-2 px-3">
-              Metas
-            </h3>
-            <Link
-              href="/whatsapp"
-              className={`block py-2 px-3 rounded ${isActive("/whatsapp")}`}
+            <button
+              onClick={() => setImportacoesOpen(!importacoesOpen)}
+              className="w-full flex justify-between items-center text-left py-2 px-3 rounded hover:bg-white/10"
             >
-              Visualizar Metas
-            </Link>
+              <span className="text-xs uppercase font-semibold text-white/70">
+                Importações
+              </span>
+              {importacoesOpen ? (
+                <ChevronUp size={16} />
+              ) : (
+                <ChevronDown size={16} />
+              )}
+            </button>
+            {importacoesOpen && (
+              <div className="mt-1 space-y-1 pl-4">
+                <Link
+                  href="/importacaoLeads"
+                  className={`block py-2 px-3 rounded ${isActive(
+                    "/importacaoLeads"
+                  )}`}
+                >
+                  Importação de Leads
+                </Link>
+                <Link
+                  href="/tasks/new"
+                  className={`block py-2 px-3 rounded ${isActive(
+                    "/tasks/new"
+                  )}`}
+                >
+                  Visualizar Leads
+                </Link>
+              </div>
+            )}
           </div>
 
-          {/* Conexões */}
+          {/* Módulo de Tarefas */}
           <div>
-            <h3 className="text-xs uppercase font-semibold text-white/70 mb-2 px-3">
-              Conexões
-            </h3>
-            <Link
-              href="/whatsapp"
-              className={`block py-2 px-3 rounded ${isActive("/whatsapp")}`}
+            <button
+              onClick={() => setTarefasOpen(!tarefasOpen)}
+              className="w-full flex justify-between items-center text-left py-2 px-3 rounded hover:bg-white/10"
             >
-              Conectar WhatsApp
-            </Link>
+              <span className="text-xs uppercase font-semibold text-white/70">
+                Módulo de Tarefas
+              </span>
+              {tarefasOpen ? (
+                <ChevronUp size={16} />
+              ) : (
+                <ChevronDown size={16} />
+              )}
+            </button>
+            {tarefasOpen && (
+              <div className="mt-1 space-y-1 pl-4">
+                <Link
+                  href="/tasks"
+                  className={`block py-2 px-3 rounded ${isActive("/tasks")}`}
+                >
+                  Visualizar Tarefas
+                </Link>
+                <Link
+                  href="/tasks/new"
+                  className={`block py-2 px-3 rounded ${isActive(
+                    "/tasks/new"
+                  )}`}
+                >
+                  Nova Tarefa
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Módulo de Agendamento */}
+          <div>
+            <button
+              onClick={() => setAgendamentoOpen(!agendamentoOpen)}
+              className="w-full flex justify-between items-center text-left py-2 px-3 rounded hover:bg-white/10"
+            >
+              <span className="text-xs uppercase font-semibold text-white/70">
+                Módulo de Agendamento
+              </span>
+              {agendamentoOpen ? (
+                <ChevronUp size={16} />
+              ) : (
+                <ChevronDown size={16} />
+              )}
+            </button>
+            {agendamentoOpen && (
+              <div className="mt-1 space-y-1 pl-4">
+                <Link
+                  href="/appointments"
+                  className={`block py-2 px-3 rounded ${isActive(
+                    "/appointments"
+                  )}`}
+                >
+                  Agendamentos
+                </Link>
+                <Link
+                  href="/appointments/new"
+                  className={`block py-2 px-3 rounded ${isActive(
+                    "/appointments/new"
+                  )}`}
+                >
+                  Novo Agendamento
+                </Link>
+              </div>
+            )}
           </div>
         </nav>
       </aside>

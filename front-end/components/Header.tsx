@@ -2,6 +2,12 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -19,7 +25,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, useState } from "react";
+import { Button } from "./ui/button";
 
 interface UserInfo {
   name: string;
@@ -46,6 +53,8 @@ const Header: FC<HeaderProps> = ({
     nameEmpresa: "Jovitech Sistemas",
     filialEmpresa: "Empresa 1 Jaraguá",
   };
+
+  const [openModalnotificacao, setOpenModalnotificacao] = useState(false);
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 h-16 bg-[#00264d] shadow-md flex items-center px-4 md:px-6 cursor-pointer">
@@ -81,6 +90,24 @@ const Header: FC<HeaderProps> = ({
           aria-label="Configurações"
           className="p-2 rounded-md hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="22"
+            height="22"
+            color="white"
+            fill="currentColor"
+            // class="bi bi-whatsapp"
+            viewBox="0 0 16 16"
+          >
+            <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232" />
+          </svg>
+        </Link>
+
+        <Link
+          href="/configuracoes"
+          aria-label="Configurações"
+          className="p-2 rounded-md hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50"
+        >
           <Settings size={22} className="text-white" />
         </Link>
         <Link
@@ -95,7 +122,7 @@ const Header: FC<HeaderProps> = ({
           <DropdownMenuTrigger asChild>
             <button
               aria-label="Notificações"
-              className="relative p-2 rounded-md hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="relative p-2 rounded-md hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50 cursor-pointer"
             >
               <Bell size={22} className="text-white" />
               <span className="absolute -top-1 -right-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-[10px] font-semibold text-white">
@@ -132,13 +159,58 @@ const Header: FC<HeaderProps> = ({
             <DropdownMenuSeparator />
 
             <div className="text-right">
-              <Link
-                href="/notifications"
-                className="text-sm text-blue-600 hover:underline"
+              <button
+                // href="/notifications"
+                onClick={() => setOpenModalnotificacao(true)}
+                className="text-sm text-blue-600 hover:underline cursor-pointer"
               >
                 Ver todas
-              </Link>
+              </button>
             </div>
+
+            <Dialog
+              open={openModalnotificacao}
+              onOpenChange={setOpenModalnotificacao}
+            >
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Todas Notificações</DialogTitle>
+                </DialogHeader>
+
+                <div className="space-y-2 max-h-64 overflow-y-auto">
+                  <div className="p-2 rounded-md bg-muted hover:bg-muted/80 cursor-pointer">
+                    <p className="text-sm font-medium">
+                      Você tem uma nova mensagem
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      há 2 minutos
+                    </p>
+                  </div>
+                  <div className="p-2 rounded-md bg-muted hover:bg-muted/80 cursor-pointer">
+                    <p className="text-sm font-medium">
+                      Atualização disponível
+                    </p>
+                    <p className="text-xs text-muted-foreground">há 1 hora</p>
+                  </div>
+                  {/* ...adicione mais notificações aqui */}
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex justify-end gap-2">
+                    <Button
+                      variant="outline"
+                      className="cursor-pointer"
+                      onClick={() => setOpenModalnotificacao(false)}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button className="cursor-pointer">
+                      Limpar Notificações
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </DropdownMenuContent>
         </DropdownMenu>
       </nav>

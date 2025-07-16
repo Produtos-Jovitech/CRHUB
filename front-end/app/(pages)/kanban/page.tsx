@@ -185,12 +185,12 @@ export default function KanbanPage() {
   return (
     <div className="px-[5px] py-6">
       {/* Filtro funis + botão novo */}
-      <div className="flex gap-3 mb-4 px-2 items-center">
+      <div className="flex flex-wrap gap-3 mb-4 px-2 items-center">
         {funis.map((funil) => (
           <button
             key={funil.id}
             onClick={() => setFunilSelecionado(funil.id)}
-            className={`px-4 py-1 rounded border ${
+            className={`px-4 py-1 rounded border whitespace-nowrap ${
               funilSelecionado === funil.id
                 ? `${cores[funil.cor]} text-white`
                 : "bg-white text-gray-800"
@@ -200,12 +200,7 @@ export default function KanbanPage() {
           </button>
         ))}
 
-        {/* Botão para abrir modal */}
-        <Button
-          className="cursor-pointer"
-          variant="outline"
-          onClick={() => setModalAberto(true)}
-        >
+        <Button variant="outline" onClick={() => setModalAberto(true)}>
           + Novo Funil
         </Button>
       </div>
@@ -223,20 +218,16 @@ export default function KanbanPage() {
             <div className="flex justify-end gap-2 cursor-pointer">
               <Button
                 variant="outline"
-                className="cursor-pointer"
                 onClick={() => setModalConfiguracaoEtapa(false)}
               >
                 Cancelar
               </Button>
-              <Button className="cursor-pointer" onClick={adicionarFunil}>
-                Adicionar
-              </Button>
+              <Button onClick={adicionarFunil}>Adicionar</Button>
             </div>
           </div>
         </DialogContent>
       </Dialog>
 
-      {/* Modal para criar novo funil */}
       <Dialog open={modalAberto} onOpenChange={setModalAberto}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -278,16 +269,10 @@ export default function KanbanPage() {
             </div>
 
             <div className="flex justify-end gap-2">
-              <Button
-                variant="outline"
-                className="cursor-pointer"
-                onClick={() => setModalAberto(false)}
-              >
+              <Button variant="outline" onClick={() => setModalAberto(false)}>
                 Cancelar
               </Button>
-              <Button className="cursor-pointer" onClick={adicionarFunil}>
-                Adicionar
-              </Button>
+              <Button onClick={adicionarFunil}>Adicionar</Button>
             </div>
           </div>
         </DialogContent>
@@ -295,7 +280,13 @@ export default function KanbanPage() {
 
       {/* Kanban com DnD */}
       <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd}>
-        <div className="flex gap-4 px-[5px] overflow-x-auto">
+        <div
+          className="
+            flex flex-nowrap gap-4 px-2
+            overflow-x-auto no-scrollbar
+          "
+          style={{ WebkitOverflowScrolling: "touch" }} // para scroll suave em iOS
+        >
           {etapas.map((etapa, index) => (
             <SortableContext
               key={etapa.name}
@@ -304,7 +295,13 @@ export default function KanbanPage() {
             >
               <div
                 id={etapa.name}
-                className="bg-gray-100 rounded-lg shadow p-0 pt-0 shrink-0 space-y-2 h-[600px] w-[calc((100vw-76px)/4-18px)]"
+                className="
+                  bg-gray-100 rounded-lg shadow p-0 pt-0 space-y-2
+                  h-[600px]
+                  min-w-[280px] max-w-[320px]
+                  flex-shrink-0
+                  flex flex-col
+                "
               >
                 <div
                   className={`w-full px-4 py-2 rounded-t-md border-b border-blue-200 flex items-center justify-between ${
@@ -316,15 +313,15 @@ export default function KanbanPage() {
                     onChange={(novoNome) => renomearEtapa(index, novoNome)}
                   />
                   <button
-                    // onClick={() => alert(`Configurar etapa: ${etapa.name}`)}
                     className="hover:text-gray-200 p-1 rounded cursor-pointer"
                     onClick={() => setModalConfiguracaoEtapa(true)}
+                    title={`Configurar etapa: ${etapa.name}`}
                   >
                     <Settings size={20} />
                   </button>
                 </div>
 
-                <div className="p-4 space-y-4">
+                <div className="p-4 space-y-4 overflow-y-auto max-h-[520px]">
                   {etapa.cards.length > 0 ? (
                     etapa.cards.map((card) => (
                       <CardItem key={card.id} card={card} />
@@ -341,10 +338,13 @@ export default function KanbanPage() {
             onClick={() =>
               setEtapas((prev) => [...prev, { name: "Nova Etapa", cards: [] }])
             }
-            className="flex items-center  cursor-pointer justify-center bg-blue-100 hover:bg-blue-200 text-blue-600 font-semibold rounded-lg p-4 min-h-[120px] shadow shrink-0"
-            style={{
-              width: `calc((100vw - 10px - 48px) / 4)`,
-            }}
+            className="
+              flex items-center cursor-pointer justify-center
+              bg-blue-100 hover:bg-blue-200 text-blue-600
+              font-semibold rounded-lg p-4 min-h-[120px] shadow
+              min-w-[280px] max-w-[320px]
+              flex-shrink-0
+            "
           >
             <Plus className="mr-2" size={20} />
             Nova etapa

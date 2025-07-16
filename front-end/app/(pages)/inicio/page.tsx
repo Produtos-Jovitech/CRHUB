@@ -36,22 +36,22 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 export default function DashboardPage() {
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-8">
+    <div className="p-4 max-w-7xl mx-auto space-y-8">
       {/* Cards principais */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="bg-white shadow rounded-lg p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="bg-white shadow rounded-lg p-4 sm:p-6">
           <h2 className="text-lg font-semibold text-gray-700">Clientes</h2>
           <p className="mt-2 text-3xl font-bold">1.245</p>
           <p className="text-sm text-gray-500">Clientes cadastrados</p>
         </div>
 
-        <div className="bg-white shadow rounded-lg p-6">
+        <div className="bg-white shadow rounded-lg p-4 sm:p-6">
           <h2 className="text-lg font-semibold text-gray-700">Agendamentos</h2>
           <p className="mt-2 text-3xl font-bold">182</p>
           <p className="text-sm text-gray-500">Agendamentos para este mês</p>
         </div>
 
-        <div className="bg-white shadow rounded-lg p-6">
+        <div className="bg-white shadow rounded-lg p-4 sm:p-6">
           <h2 className="text-lg font-semibold text-gray-700">Tarefas</h2>
           <p className="mt-2 text-3xl font-bold">45</p>
           <p className="text-sm text-gray-500">Tarefas pendentes</p>
@@ -59,9 +59,9 @@ export default function DashboardPage() {
       </div>
 
       {/* Gráficos */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Gráfico de Leads */}
-        <div className="bg-white shadow rounded-lg p-6">
+        <div className="bg-white shadow rounded-lg p-4 sm:p-6">
           <h3 className="text-xl font-semibold mb-4 text-gray-700">
             Captura de Leads
           </h3>
@@ -91,7 +91,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Gráfico de Tarefas */}
-        <div className="bg-white shadow rounded-lg p-6">
+        <div className="bg-white shadow rounded-lg p-4 sm:p-6">
           <h3 className="text-xl font-semibold mb-4 text-gray-700">
             Tarefas Concluídas x Pendentes
           </h3>
@@ -111,11 +111,11 @@ export default function DashboardPage() {
       </div>
 
       {/* Agenda da semana */}
-      <div className="bg-white shadow rounded-lg p-6">
+      <div className="bg-white shadow rounded-lg p-4 sm:p-6 overflow-x-auto">
         <h3 className="text-xl font-semibold mb-4 text-gray-700">
           Agendamentos da Semana
         </h3>
-        <table className="w-full table-auto border-collapse">
+        <table className="w-full table-auto border-collapse min-w-[320px]">
           <thead>
             <tr className="bg-gray-100">
               <th className="text-left p-2 border-b">Dia</th>

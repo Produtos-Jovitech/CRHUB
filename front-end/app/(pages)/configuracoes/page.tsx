@@ -1,9 +1,10 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { useIsMobile } from "@/contexts/MobileContext";
 import { useState } from "react";
 
-const menuItems = [
+const fullMenuItems = [
   "Automações Funis",
   "Automações Etapas",
   "Campos Personalizáveis",
@@ -11,31 +12,53 @@ const menuItems = [
   "Tema do Sistema",
 ];
 
+const mobileMenuMap: Record<string, string | null> = {
+  "Automações Funis": "Funis",
+  "Automações Etapas": "Etapas",
+  "Campos Personalizáveis": "Campos",
+  "Whatsapp Conectado": null, // remover
+  "Tema do Sistema": "Tema",
+};
+
 export default function ConfiguracoesPage() {
+  const { isMobile } = useIsMobile();
+  const menuItems = isMobile
+    ? fullMenuItems
+        .map((item) => mobileMenuMap[item])
+        .filter((item): item is string => item !== null)
+    : fullMenuItems;
+
   const [selected, setSelected] = useState(menuItems[0]);
 
   return (
-    <div className="px-[5px] py-6 h-screen">
-      <div className="flex h-[80vh] max-w-full mx-auto border rounded-lg overflow-hidden shadow-sm bg-white">
+    <div className="px-[5px] py-6 min-h-screen">
+      <div className="flex flex-col sm:flex-row h-[80vh] max-w-full mx-auto border rounded-lg overflow-hidden shadow-sm bg-white">
         {/* Sidebar */}
-        <nav className="w-64 bg-gray-50 border-r">
-          <ul className="flex flex-col h-full">
-            {menuItems.map((item) => (
-              <li key={item}>
-                <button
-                  className={`w-full text-left px-4 py-3 border-b hover:bg-gray-100 transition-colors
-                    ${
-                      selected === item
-                        ? "bg-white font-semibold border-l-4 border-blue-500"
-                        : "text-gray-600"
-                    }
-                  `}
-                  onClick={() => setSelected(item)}
-                >
-                  {item}
-                </button>
-              </li>
-            ))}
+        <nav className="w-full sm:w-64 bg-gray-50 border-b sm:border-b-0 sm:border-r overflow-auto">
+          <ul className="flex sm:flex-col">
+            {menuItems.map((item) => {
+              // No mobile, o texto já vem ajustado (pelo map)
+              const displayText = item;
+              const isSelected = selected === item;
+
+              return (
+                <li key={item} className="flex-1 sm:flex-none">
+                  <button
+                    className={`
+                      w-full text-center sm:text-left px-4 py-3 border-b sm:border-b border-gray-200 hover:bg-gray-100 transition-colors
+                      ${
+                        isSelected
+                          ? "sm:bg-white sm:font-semibold sm:border-l-4 sm:border-blue-500 bg-blue-100 font-semibold text-blue-700"
+                          : "text-gray-600"
+                      }
+                    `}
+                    onClick={() => setSelected(item)}
+                  >
+                    {displayText}
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
